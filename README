@@ -1,1 +1,7 @@
 Bio-WET is a Bioinformatics Web Services Evaluation Toolkit, initially developed by a group of bioinformatics students at the Vienna University of Applied Sciences
+
+Update July 16, 2011 - dp13
+Added:
+-Google-search with keywords (if provided)
+-Pubmed-search with domain
+-empty BioWetDB.sqlite-database

@@ -68,7 +68,7 @@ use BioWetCrawler;
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^#
 
 my $domain = "www.bioinformatics.org";
-my $dbFile = "/mnt/e/DataBase/bioWetDB.sqlite";			#  DB file; this contains DB
+my $dbFile = "./bioWetDB.sqlite";			#  DB file; this contains DB
 
 
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^#

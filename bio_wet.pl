@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 # -*-CPerl-*-
-# Last changed Time-stamp: <2011-05-30 18:28:130 hk>
+# Last changed Time-stamp: <2011-07-16 18:28:13 dp>
 
 # BIO-WET is a Bioinformatics Web Service Evaluation Toolkit
 # Control routine for the various modules
@@ -10,6 +10,7 @@
 # *
 # *  Copyright 2010-2011 Michael T. Wolfinger <m.wolfinger@incore.at>,
 # *  Hans Kraus <hans@hanswkraus.com>
+# *  Dietmar Pils <dietmar@pils.name>
 # *  All rights reserved
 # *
 # *  This program is free software: you can redistribute it and/or modify
@@ -63,6 +64,8 @@ use DBI;
 use bioWetDB;
 use pageInfo;
 use BioWetCrawler;
+use Google_AJAX;
+use Pubmed_search;
 
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^#
 #^^^^^^^^^^ Variables ^^^^^^^^^^^#
@@ -79,7 +82,7 @@ my $depth = 2;											# default value of crawler depth
 my $indomain = '';										# switch for staying in domain
 my $keywords = '';										# switch for keyword options
 my %data = ();
-my $dbFile = "/mnt/e/DataBase/bioWetDB.sqlite";			# dir where DB files should be created
+my $dbFile = "./bioWetDB.sqlite";			# dir where DB files should be created
 
 
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^#
@@ -124,6 +127,22 @@ sub main
 	$dbObject->enter($ss, undef);
 	print "\n";
 #	exit;
+
+##########################
+## Usage of Google_AJAX ##
+##########################
+
+if ($keywords eq "1") {
+print "Keywords:\t$kwd\n";
+my $google_object = Google_AJAX->new($dbFile,$kwd,$sysTime);
+$google_object->GOOGLEsearch; }
+
+############################
+## Usage of Pubmed_search ##
+############################
+
+my $pubmed_object = Pubmed_search->new($dbFile,$domain,$sysTime);
+$pubmed_object->PUBMEDsearch;
 
 #####################################################################
 #~ #VARIABLES
@@ -297,8 +316,9 @@ sub usage {
 *********************************************************************
 **                      BIO - WET                                  **
 **    Bioinformatics Web Services Evaluation Toolkit               **
-**    (c) 2010-2011 Michael T. Wolfinger <m.wolfinger\@incore.at>  **
-**                  Hans Kraus           <hans\@fotokraus.at>      **
+**    (c) 2010-2011 Michael T. Wolfinger <m.wolfinger\@incore.at>   **
+**                  Hans Kraus           <hans\@fotokraus.at>       **
+**                  Dietmar Pils         <dietmar\@pils.name>       **
 *********************************************************************
 
 Usage: $0 [options]
